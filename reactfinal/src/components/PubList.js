@@ -4,27 +4,40 @@ import CardsPromo from './CardsPromo';
 import Row from 'react-bootstrap/Row';
 
 
-export default function PubList(){
+export default function PubList(props){
     const [publicaciones, setPublicaciones]= useState([]);
-    useEffect(getPubs, [])   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
+    
+    useEffect(getPubs, [props.type])   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
 
     async function getPubs (){
-        const url = 'http://localhost:8000/publicaciones';
-        const response = await fetch(url);
+        let url = 'http://localhost:8000/publicaciones';
+
+        
+        if(props.type === 'mispublicaciones'){
+                url += 'usrpubs';
+        }else if(props.type == 'favoritos'){
+            url += '/favoritos'
+        }
+
+        const response = await fetch(url, { credentials: 'include' });
         const data = await response.json();
+
         setPublicaciones(data);
         };
 
         function getCards(){
         const cards = publicaciones.map((publicacion)=>{
             return(
-            <Cards titulo={publicacion.titulo}
+            <Cards 
+            titulo={publicacion.titulo}
             precio={publicacion.precio}
-            imagen={publicacion.imagen} />
+            imagen={publicacion.imagen} 
+            id={publicacion.id}
+            />
             )
         });
         return cards;
-        }
+    };
 
     return (
         <>
@@ -38,4 +51,4 @@ export default function PubList(){
         </Row>
         </>
     );
-}
+};

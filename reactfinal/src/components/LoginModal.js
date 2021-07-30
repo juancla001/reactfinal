@@ -14,7 +14,7 @@ export default function LoginModal(props) {
     };
 
     const handleAceptarClick = () =>{
-        console.log(email, password)
+        props.handleLogin(email, password)
     };
 
     return(
