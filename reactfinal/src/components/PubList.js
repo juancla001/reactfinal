@@ -2,10 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Cards from './Cards';
 import CardsPromo from './CardsPromo';
 import Row from 'react-bootstrap/Row';
+import NavBarMisPubs from './NavBarMisPubs';
+import PubEditorModal from './PubEditorModal';
 
 
 export default function PubList(props){
     const [publicaciones, setPublicaciones]= useState([]);
+    const [showPubEditorModal, setShowEditorModal] = useState(false)
     
     useEffect(getPubs, [props.type])   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
 
@@ -33,11 +36,16 @@ export default function PubList(props){
             precio={publicacion.precio}
             imagen={publicacion.imagen} 
             id={publicacion.id}
+            type={props.type}
             />
             )
         });
         return cards;
     };
+    
+    const handleShowPubEditorModal = ()=>{
+        setShowEditorModal(true);
+    }
 
     return (
         <>
@@ -45,10 +53,17 @@ export default function PubList(props){
             <CardsPromo titulo="promocion de la semana" />
             <CardsPromo titulo="promocion de la semana" />
         </Row>
-        <p>PRODUCTOS DESTACADOS</p>
+
+        {props.type === 'mispublicaciones' && (
+            <NavBarMisPubs onNewPubClick={handleShowPubEditorModal} 
+            />
+        )}
+        
         <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         {getCards()}
         </Row>
+
+        <PubEditorModal show={showPubEditorModal} />
         </>
     );
 };
