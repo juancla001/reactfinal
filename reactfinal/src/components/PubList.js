@@ -46,6 +46,9 @@ export default function PubList(props){
     const handleShowPubEditorModal = ()=>{
         setShowEditorModal(true);
     }
+const handleHidePubEditorModal = () =>{
+    setShowEditorModal(false);
+}
 
     return (
         <>
@@ -63,7 +66,7 @@ export default function PubList(props){
         {getCards()}
         </Row>
 
-        <PubEditorModal show={showPubEditorModal} />
+        <PubEditorModal show={showPubEditorModal} handleHide={handleHidePubEditorModal}/>
         </>
     );
 };

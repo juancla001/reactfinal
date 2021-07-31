@@ -6,6 +6,7 @@ const session = require('express-session');
 const usuariosRoutes = require('./routes/usuarios_routes');
 const publicacionesRoutes = require('./routes/publicaciones_routes');
 const authRoutes = require('./routes/auth_routes');
+const categoriaRoutes = require('./routes/categoria_routes');
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/publicaciones', publicacionesRoutes);
 
 app.use('/auth', authRoutes);
+
+app.use('/categorias', categoriaRoutes);
 
 //conectar servidor al puerto 8000
 app.listen(8000, ()=>{
