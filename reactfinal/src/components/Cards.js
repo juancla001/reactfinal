@@ -17,6 +17,16 @@ export default function Cards(props){
         objectFit:'contain',
     };
 
+    const handleEditClick = (event) => {
+        event.preventDefault();
+        props.onEditClick(props.id);
+    };
+
+    const handleDeleteClick = (event) => {
+        event.preventDefault();
+        props.onDeleteClick();
+    };
+
     return(
         <Col className="my-4 text-center" >
         <Link to={'/detail/${props.id}'} className="nav-link">
@@ -34,19 +44,11 @@ export default function Cards(props){
                         <Col>
                         <Button 
                             variant="light" 
-                                onClick={(event)=>{
-                                    event.preventDefault();
-                                    alert("editar");
-                                }}
-                        >
+                            onClick={handleEditClick}>
                             <FontAwesomeIcon color="green" icon={faEdit}/>
                         </Button>
                         <Button variant="light"
-                                    onClick={(event)=>{
-                                        event.preventDefault();  //con esto hago que no sevalla de la pag
-                                        alert("Eliminar");
-                                }}
-                        >
+                                    onClick={handleDeleteClick}>
                             <FontAwesomeIcon color="red" icon={faTrash}/>
                         </Button>
                         </Col>

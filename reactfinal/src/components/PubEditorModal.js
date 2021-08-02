@@ -82,6 +82,15 @@ const handleSave = () =>{
     });
 };
 
+useEffect( ()=>{
+    if (props.idPub){
+        console.log("modo editor")
+    }else{
+        console.log("modo nuevo")
+        }
+    }
+)
+
     return (
         <Modal show={props.show} onHide={props.handleHide}>
             <Modal.Header closeButton>

@@ -9,17 +9,18 @@ import Swal from 'sweetalert2';
 export default function PubList(props){
     const [publicaciones, setPublicaciones]= useState([]);
     const [showPubEditorModal, setShowEditorModal] = useState(false)
-    
+    const [selectedPub, setSelectedPub] = useState(null);
+
+
     useEffect(getPubs, [props.type])   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
 
     async function getPubs (){
         let url = 'http://localhost:8000/publicaciones';
 
-        
         if(props.type === 'mispublicaciones'){
-                url += 'usrpubs';
+            url += 'usrpubs';
         }else if(props.type == 'favoritos'){
-            url += '/favoritos'
+            url += '/favoritos';
         }
 
         const response = await fetch(url, { credentials: 'include' });
@@ -28,24 +29,28 @@ export default function PubList(props){
         setPublicaciones(data);
         };
 
-        function getCards(){
+    function getCards(){
         const cards = publicaciones.map((publicacion)=>{
             return(
-            <Cards 
-            titulo={publicacion.titulo}
-            precio={publicacion.precio}
-            imagen={publicacion.imagen} 
-            id={publicacion.id}
-            type={props.type}
-            />
+                <Cards 
+                titulo={publicacion.titulo}
+                precio={publicacion.precio}
+                imagen={publicacion.imagen} 
+                id={publicacion.id}
+                type={props.type}
+                onEditClick={handleEditeClick}
+                //onDeleteClick={handleDeleteClick}
+                />
             )
         });
-        return cards;
+    return cards;
+};
+
+const handleShowPubEditorModal = ()=>{
+    setSelectedPub(null);
+    setShowEditorModal(true);
     };
-    
-    const handleShowPubEditorModal = ()=>{
-        setShowEditorModal(true);
-    };
+
 const handleHidePubEditorModal = () =>{
     setShowEditorModal(false);
 };
@@ -53,11 +58,18 @@ const handleHidePubEditorModal = () =>{
 const handlePubSaved = (message)=>{
     getPubs();
     handleHidePubEditorModal();
+
     Swal.fire({
         text: message,
         icon: 'success',
     });
 };
+
+const handleEditeClick = (idPub)=>{
+    selectedPub(idPub);
+    handleShowPubEditorModal();
+};
+
 
     return (
         <>
@@ -75,10 +87,12 @@ const handlePubSaved = (message)=>{
         {getCards()}
         </Row>
 
-        <PubEditorModal show={showPubEditorModal}
-                    handleHide={handleHidePubEditorModal}
-                    onPubSaved = {handlePubSaved}
-                    />
+            <PubEditorModal 
+                show={showPubEditorModal}
+                handleHide={handleHidePubEditorModal}
+                onPubSaved={handlePubSaved}
+                idPubP={selectedPub}
+            />
         </>
     );
 };
