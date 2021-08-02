@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors')  //con cors puedo hacer usode diferentes host ej el 3000 y 8000
 const session = require('express-session');
-
+const fileupload = require('express-fileupload');
 
 const usuariosRoutes = require('./routes/usuarios_routes');
 const publicacionesRoutes = require('./routes/publicaciones_routes');
@@ -11,6 +11,8 @@ const categoriaRoutes = require('./routes/categoria_routes');
 const app = express();
 
 app.use(cors({credentials: true,  origin: 'http://localhost:3000'}));   //para darle permiso solo a un puerto especifico debo escribir por ej= {origin:'htpp://localhost:3000'}, para manejar las cookies debo acgregar credentials
+
+app.use(fileupload());
 
 app.use(session({
     secret: 'qwertyu!!!!@',
@@ -36,4 +38,3 @@ app.use('/categorias', categoriaRoutes);
 app.listen(8000, ()=>{
     console.log('Servidor conectado');
 });
-//ARMADO DE RUTAS

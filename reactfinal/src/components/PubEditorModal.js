@@ -70,7 +70,7 @@ const handleSave = () =>{
     formData.append('pubCategory', pubCategory);
     formData.append('pubDescription', pubDescription);
 
-    const url = 'https://localhost:8000/publicaciones'
+    const url = 'http://localhost:8000/publicaciones'
     fetch(url,{
         method: 'POST',
         body: formData,
