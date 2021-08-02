@@ -4,7 +4,7 @@ import CardsPromo from './CardsPromo';
 import Row from 'react-bootstrap/Row';
 import NavBarMisPubs from './NavBarMisPubs';
 import PubEditorModal from './PubEditorModal';
-
+import Swal from 'sweetalert2';
 
 export default function PubList(props){
     const [publicaciones, setPublicaciones]= useState([]);
@@ -45,10 +45,19 @@ export default function PubList(props){
     
     const handleShowPubEditorModal = ()=>{
         setShowEditorModal(true);
-    }
+    };
 const handleHidePubEditorModal = () =>{
     setShowEditorModal(false);
-}
+};
+
+const handlePubSaved = (message)=>{
+    getPubs();
+    handleHidePubEditorModal();
+    Swal.fire({
+        text: message,
+        icon: 'success',
+    });
+};
 
     return (
         <>
@@ -66,7 +75,10 @@ const handleHidePubEditorModal = () =>{
         {getCards()}
         </Row>
 
-        <PubEditorModal show={showPubEditorModal} handleHide={handleHidePubEditorModal}/>
+        <PubEditorModal show={showPubEditorModal}
+                    handleHide={handleHidePubEditorModal}
+                    onPubSaved = {handlePubSaved}
+                    />
         </>
     );
 };

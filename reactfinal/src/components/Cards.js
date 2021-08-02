@@ -25,8 +25,6 @@ export default function Cards(props){
                     <Card.Body>
                         <Card.Title>{props.titulo}</Card.Title>
                     <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
                     </Card.Text>
                     </Card.Body>
                     <Card.Footer className="text-muted">${props.precio}</Card.Footer>
@@ -46,7 +44,7 @@ export default function Cards(props){
                         <Button variant="light"
                                     onClick={(event)=>{
                                         event.preventDefault();  //con esto hago que no sevalla de la pag
-                                        alert("editar");
+                                        alert("Eliminar");
                                 }}
                         >
                             <FontAwesomeIcon color="red" icon={faTrash}/>

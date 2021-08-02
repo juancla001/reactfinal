@@ -75,9 +75,10 @@ const handleSave = () =>{
         method: 'POST',
         body: formData,
         credentials: 'include'
-    }).then((response) => response.json())
+    })
+    .then((response) => response.json())
     .then((data) =>{
-        console.log(data);
+        props.onPubSaved(data.message);
     });
 };
 

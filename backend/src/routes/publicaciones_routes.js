@@ -35,7 +35,7 @@ router.get('/userpubs', (req, res)=>{
 });
 
 router.get('/:id', (req, res)=>{        
-    const sql = `SELECT * FROM publicaciones WHERE id= ?`;
+    const sql = `SELECT * FROM publicaciones WHERE id = ?`;
 
     connection.query(sql, [req.params.id], (err, result)=>{
         if(err) {
@@ -52,10 +52,10 @@ router.post('/', (req,res) =>{
 
     if (req.files){
         const pubImage = req.files.pubImage;
-
+//tomar la fecha del archivo
         imageFileName = Date.now() + path.extname(pubImage.name);
         console.log(imageFileName);
-
+//mover a una carpeta especifica
         pubImage.mv(`./public/images/${imageFileName}`, (err)=>{
             if(err){
                 console.log(err);
@@ -82,7 +82,7 @@ router.post('/', (req,res) =>{
         }else{
             res.json({
                 status:'ok',
-                message: 'Publicacion cargada'
+                message: 'Publicacion cargada',
             });
         }
     });
