@@ -33,7 +33,7 @@ export default function PubEditorModal(props) {
             <option value={categoria.id}>{categoria.nombre}</option>
             ));
 
-        const url = 'http://localhost:8000/categorias'
+        const url = `http://localhost:8000/categorias`
         fetch(url)
         .then((response)=>response.json())
         .then((categorias)=>{
@@ -70,9 +70,15 @@ const handleSave = () =>{
     formData.append('pubCategory', pubCategory);
     formData.append('pubDescription', pubDescription);
 
-    const url = 'http://localhost:8000/publicaciones'
+    const url = `http://localhost:8000/publicaciones`;
+    const method = 'POST'
+    if(props.idPub){
+        method = 'PUT';
+        URL += `/${props.idPub}`;
+    }
+
     fetch(url,{
-        method: 'POST',
+        method: method,
         body: formData,
         credentials: 'include'
     })

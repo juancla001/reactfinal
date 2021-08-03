@@ -88,5 +88,44 @@ router.post('/', (req,res) =>{
     });
 });
 
+router.put('/:id', (req,res) =>{
+    let sqlUpdate = `UPDATE publicaciones
+                SET titulo = ?,
+                    precio = ?,
+                    cat_id = ?`
+
+    let values = [req.body.pubTitulo, req.body.pubPrice, req.body.pubCategory];
+
+    if(req.files){
+        //averiguo cual es el nombre del archivo actual
+        const sqlCurrentImage = `SELECT imagen 
+                                FROM publicaciones
+                                WHERE id = ?`
+        connection.query(sqlCurrentImage, [req.params.id], (err, result)=>{
+            if(err) {
+                console.error(err);
+            } else {
+                //borrar archivo
+                const fileToDelete = `./public/images/${result[0].imagen}`
+                fs.unlink(fileToDelete, (err)=>{
+                    if(err){
+                        console.log("error al borrar el archivo");
+                    }else{
+                        console.log('archivo borrado');
+                    }
+                });
+            }
+        });
+
+const pubImage = req.files.pubImage;
+        imageFileName = Date.now() + path.extname(pubImage.name);
+        console.log(imageFileName);
+        pubImage.mv(`./public/images/${imageFileName}`, (err)=>{
+            if(err){
+                console.log(err);
+            }
+        });
+    }
+});
 
 module.exports = router;

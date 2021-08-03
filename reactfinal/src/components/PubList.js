@@ -16,7 +16,7 @@ export default function PubList(props){
     useEffect(getPubs, [props.type]);   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
 
     async function getPubs (){
-        let url = 'http://localhost:8000/publicaciones';
+        let url = `http://localhost:8000/publicaciones`;
 
         if(props.type === 'mispublicaciones'){
             url += '/usrpubs';
