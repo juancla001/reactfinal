@@ -92,7 +92,7 @@ router.put('/:id', (req,res) =>{
     let sqlUpdate = `UPDATE publicaciones
                 SET titulo = ?,
                     precio = ?,
-                    cat_id = ?`
+                    cat_id = ?`;
 
     let values = [req.body.pubTitulo, req.body.pubPrice, req.body.pubCategory];
 
@@ -126,6 +126,7 @@ const pubImage = req.files.pubImage;
             }
         });
     }
+    
 });
 
 module.exports = router;
