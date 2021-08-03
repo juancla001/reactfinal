@@ -5,7 +5,6 @@ import{useParams} from 'react-router-dom';
 
 
 export default function PubDetail() {
-
     const {id} = useParams();
     console.log('id params', id);
 

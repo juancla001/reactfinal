@@ -24,7 +24,7 @@ export default function Cards(props){
 
     const handleDeleteClick = (event) => {
         event.preventDefault();
-        props.onDeleteClick();
+        props.onDeleteClick(props.id);
     };
 
     return(

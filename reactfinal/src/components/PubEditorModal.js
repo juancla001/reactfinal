@@ -85,11 +85,27 @@ const handleSave = () =>{
 useEffect( ()=>{
     if (props.idPub){
         console.log("modo editor")
+        const url = `http://localhost:8000/publicaciones/${props.idPub}`;
+        fetch(url)
+            .then((response)=> response.json())
+            .then((data)=>{
+                setPubTitulo(data.titulo);
+                setPubPrice(data.price)
+                setPubCategory(data.categoria)
+                setPubImage('')
+                setPreviewImage(`http://localhost:8000/images/${data.imagen}`)
+                setPubCategory(data.cat_id)
+            });
     }else{
         console.log("modo nuevo")
+        setPubTitulo('')
+        setPubPrice('')
+        setPubCategory('')
+        setPubImage('')
+        setPreviewImage('')
+        setPubCategory('')
         }
-    }
-)
+    }, [props.idPub]);
 
     return (
         <Modal show={props.show} onHide={props.handleHide}>

@@ -8,17 +8,18 @@ import Swal from 'sweetalert2';
 
 export default function PubList(props){
     const [publicaciones, setPublicaciones]= useState([]);
+
     const [showPubEditorModal, setShowEditorModal] = useState(false)
     const [selectedPub, setSelectedPub] = useState(null);
 
 
-    useEffect(getPubs, [props.type])   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
+    useEffect(getPubs, [props.type]);   //el array vacio para que solo lo actualiza una vez, pero puedo usar variables de estado consultar de nuevo
 
     async function getPubs (){
         let url = 'http://localhost:8000/publicaciones';
 
         if(props.type === 'mispublicaciones'){
-            url += 'usrpubs';
+            url += '/usrpubs';
         }else if(props.type == 'favoritos'){
             url += '/favoritos';
         }
@@ -38,7 +39,7 @@ export default function PubList(props){
                 imagen={publicacion.imagen} 
                 id={publicacion.id}
                 type={props.type}
-                onEditClick={handleEditeClick}
+                onEditClick={handleEditClick}
                 //onDeleteClick={handleDeleteClick}
                 />
             )
@@ -65,11 +66,11 @@ const handlePubSaved = (message)=>{
     });
 };
 
-const handleEditeClick = (idPub)=>{
-    selectedPub(idPub);
-    handleShowPubEditorModal();
+const handleEditClick = (idPub)=>{
+    console.log('cargar los datos de la pub' + idPub);
+    setSelectedPub(idPub);
+    handleShowPubEditorModal(true);
 };
-
 
     return (
         <>
@@ -91,7 +92,7 @@ const handleEditeClick = (idPub)=>{
                 show={showPubEditorModal}
                 handleHide={handleHidePubEditorModal}
                 onPubSaved={handlePubSaved}
-                idPubP={selectedPub}
+                idPub={selectedPub}
             />
         </>
     );
